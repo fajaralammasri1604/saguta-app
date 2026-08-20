@@ -1,0 +1,13 @@
+CREATE TABLE "SagoPriceTrend" (
+  "id" TEXT NOT NULL,
+  "regencyCity" TEXT NOT NULL,
+  "price2022RpKg" INTEGER NOT NULL,
+  "price2023RpKg" INTEGER NOT NULL,
+  "price2024RpKg" INTEGER NOT NULL,
+  "averagePriceRp" INTEGER NOT NULL,
+  "sortOrder" INTEGER NOT NULL DEFAULT 0,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL,
+
+  CONSTRAINT "SagoPriceTrend_pkey" PRIMARY KEY ("id")
+);

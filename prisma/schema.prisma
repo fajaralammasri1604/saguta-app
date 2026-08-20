@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model CommodityMetric {
+  id             String   @id
+  monthLabel     String
+  period         DateTime @unique
+  pricePerKg     Int
+  productionTon  Int
+  activeCenters  Int
+  partnerFarmers Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([period])
+}
+
+model ProductComposition {
+  id         String   @id
+  name       String
+  percentage Int
+  colorKey   String
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model SagoPriceTrend {
+  id             String   @id
+  regencyCity    String
+  price2022RpKg  Int
+  price2023RpKg  Int
+  price2024RpKg  Int
+  averagePriceRp Int
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SagoProductionVolume {
+  id                String   @id
+  regencyCity       String
+  production2022Ton Int
+  production2023Ton Int
+  production2024Ton Int
+  sortOrder         Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model SagoProductionAnalysis {
+  id                       String   @id
+  regency                  String
+  production2024Ton        Decimal  @db.Decimal(12, 2)
+  price2024RpKg            Int
+  productionValueMillionRp Decimal  @db.Decimal(12, 2)
+  volumeSharePercent       Decimal  @db.Decimal(5, 2)
+  valueSharePercent        Decimal  @db.Decimal(5, 2)
+  category                 String
+  categoryLevel            String
+  sortOrder                Int      @default(0)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model RegionalCommodityStat {
+  id                  String   @id
+  regency             String
+  productionTon       Int
+  pricePerKg          Int
+  trend30DayPercent   Int
+  centersCount        Int
+  activePartnersCount Int
+  sortOrder           Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model FeaturedCenter {
+  id            String   @id
+  area          String
+  village       String
+  rank          Int
+  farmersCount  Int
+  productionTon Int
+  growthPercent Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DashboardUpdate {
+  id        String   @id
+  label     String
+  updatedAt DateTime @updatedAt
+}

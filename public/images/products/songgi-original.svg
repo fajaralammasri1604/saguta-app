@@ -1,0 +1,16 @@
+<svg width="240" height="320" viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="44" y="18" width="152" height="284" rx="24" fill="#F8E8BE"/>
+  <path d="M44 214H196V278C196 291.255 185.255 302 172 302H68C54.7452 302 44 291.255 44 278V214Z" fill="#0F6B33"/>
+  <path d="M65 18H102V74H65V18Z" fill="#0B5D2A"/>
+  <path d="M196 62C158 81 128 66 99 96C73 122 69 158 44 174V42C44 28.745 54.745 18 68 18H172C185.255 18 196 28.745 196 42V62Z" fill="#FFF8E8" opacity="0.64"/>
+  <text x="76" y="129" fill="#A66A2C" font-family="Arial, sans-serif" font-size="36" font-weight="700" transform="rotate(-6 76 129)">Songgi</text>
+  <text x="79" y="153" fill="#8B5E34" font-family="Arial, sans-serif" font-size="11" font-weight="700">Sagu Instan Bercitarasa</text>
+  <circle cx="120" cy="214" r="49" fill="#FFFDF7"/>
+  <ellipse cx="120" cy="222" rx="43" ry="30" fill="#F2C94C"/>
+  <path d="M84 214C105 199 135 198 156 214C141 236 101 237 84 214Z" fill="#F7EED3"/>
+  <circle cx="97" cy="205" r="9" fill="#D94D1A"/>
+  <circle cx="149" cy="209" r="8" fill="#D94D1A"/>
+  <path d="M111 198C129 185 149 191 160 206" stroke="#8B5E34" stroke-width="8" stroke-linecap="round"/>
+  <text x="82" y="261" fill="#FFF8E8" font-family="Arial, sans-serif" font-size="16" font-weight="700">ORIGINAL</text>
+  <text x="152" y="288" fill="#FFF8E8" font-family="Arial, sans-serif" font-size="18" font-weight="700">100 g</text>
+</svg>

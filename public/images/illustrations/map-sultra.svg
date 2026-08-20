@@ -1,0 +1,41 @@
+<svg width="900" height="620" viewBox="0 0 900 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sea" x1="111" y1="2" x2="772" y2="589" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DDF5EF"/>
+      <stop offset="0.5" stop-color="#91CBB8"/>
+      <stop offset="1" stop-color="#4FA3A2"/>
+    </linearGradient>
+    <linearGradient id="land" x1="335" y1="53" x2="618" y2="547" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6BBF59"/>
+      <stop offset="1" stop-color="#0F6B33"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" fill="url(#sea)"/>
+  <path d="M364 39C426 94 437 151 416 210C394 271 416 311 471 349C532 392 568 450 553 541C507 493 459 453 402 437C331 417 288 372 292 303C296 232 338 205 315 151C297 109 312 76 364 39Z" fill="url(#land)"/>
+  <path d="M587 180C623 210 648 244 653 287C657 322 677 346 717 358C655 377 608 357 585 305C564 256 556 217 587 180Z" fill="#2E7D32"/>
+  <path d="M675 418C715 436 741 463 759 501C718 517 671 505 647 475C619 440 635 420 675 418Z" fill="#3FA34D"/>
+  <path d="M437 106C491 159 514 225 501 303C492 357 515 407 558 459" stroke="#FFF8E8" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+  <g font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#FFFDF7">
+    <text x="399" y="171">Konawe</text>
+    <text x="428" y="270">Kolaka</text>
+    <text x="530" y="236">Kendari</text>
+    <text x="354" y="379">Bombana</text>
+    <text x="629" y="468">Muna</text>
+    <text x="720" y="511">Buton</text>
+  </g>
+  <g fill="#FFFDF7" stroke="#DFA622" stroke-width="6">
+    <path d="M430 135C430 153 408 170 408 170C408 170 386 153 386 135C386 123 396 113 408 113C420 113 430 123 430 135Z"/>
+    <path d="M481 245C481 263 459 280 459 280C459 280 437 263 437 245C437 233 447 223 459 223C471 223 481 233 481 245Z"/>
+    <path d="M570 211C570 229 548 246 548 246C548 246 526 229 526 211C526 199 536 189 548 189C560 189 570 199 570 211Z"/>
+    <path d="M398 352C398 370 376 387 376 387C376 387 354 370 354 352C354 340 364 330 376 330C388 330 398 340 398 352Z"/>
+    <path d="M655 441C655 459 633 476 633 476C633 476 611 459 611 441C611 429 621 419 633 419C645 419 655 429 655 441Z"/>
+  </g>
+  <g transform="translate(676 80)">
+    <path d="M19 105H150L132 136H42L19 105Z" fill="#8B5E34"/>
+    <rect x="55" y="62" width="72" height="43" fill="#DFA622"/>
+    <path d="M73 62V34M98 62V23M121 62V45" stroke="#0B5D2A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M0 137C43 126 83 129 127 140C155 147 180 148 207 139" stroke="#FFFDF7" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+  </g>
+  <circle cx="108" cy="98" r="72" fill="#FFF8E8" opacity="0.18"/>
+  <circle cx="782" cy="534" r="95" fill="#FFF8E8" opacity="0.13"/>
+</svg>

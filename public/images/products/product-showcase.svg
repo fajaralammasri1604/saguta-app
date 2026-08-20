@@ -1,0 +1,20 @@
+<svg width="520" height="340" viewBox="0 0 520 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="340" rx="28" fill="#FFF8E8"/>
+  <circle cx="168" cy="218" r="86" fill="#FFFDF7"/>
+  <ellipse cx="168" cy="232" rx="78" ry="48" fill="#F2C94C"/>
+  <path d="M88 220C124 185 200 184 246 220C218 264 121 268 88 220Z" fill="#F7EED3"/>
+  <circle cx="113" cy="202" r="14" fill="#D94D1A"/>
+  <circle cx="230" cy="211" r="13" fill="#D94D1A"/>
+  <path d="M145 196C184 166 219 180 246 211" stroke="#8B5E34" stroke-width="14" stroke-linecap="round"/>
+  <rect x="306" y="52" width="82" height="210" rx="16" fill="#F8E8BE"/>
+  <path d="M306 198H388V246C388 254.837 380.837 262 372 262H322C313.163 262 306 254.837 306 246V198Z" fill="#0F6B33"/>
+  <text x="319" y="135" fill="#A66A2C" font-family="Arial, sans-serif" font-size="20" font-weight="700" transform="rotate(-6 319 135)">Songgi</text>
+  <rect x="406" y="74" width="82" height="188" rx="16" fill="#F9E1B2"/>
+  <path d="M406 198H488V246C488 254.837 480.837 262 472 262H422C413.163 262 406 254.837 406 246V198Z" fill="#D95B19"/>
+  <text x="419" y="147" fill="#B94813" font-family="Arial, sans-serif" font-size="20" font-weight="700" transform="rotate(-6 419 147)">Songgi</text>
+  <path d="M16 74C86 48 132 43 198 59" stroke="#6BBF59" stroke-width="10" stroke-linecap="round"/>
+  <path d="M28 100C93 76 131 78 181 91" stroke="#3FA34D" stroke-width="8" stroke-linecap="round"/>
+  <text x="36" y="58" fill="#0B5D2A" font-family="Arial, sans-serif" font-size="18" font-weight="800">Produk Unggulan</text>
+  <text x="36" y="84" fill="#102A1A" font-family="Arial, sans-serif" font-size="26" font-weight="900">SAGU BERKUALITAS</text>
+  <text x="36" y="110" fill="#102A1A" font-family="Arial, sans-serif" font-size="26" font-weight="900">DARI SULTRA</text>
+</svg>
