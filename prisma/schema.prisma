@@ -76,6 +76,28 @@ model SagoProductionAnalysis {
   @@index([sortOrder])
 }
 
+model SagoLandCondition {
+  id                            String   @id
+  landType                      String
+  areaHa                        Int
+  areaSharePercent              Decimal  @db.Decimal(5, 2)
+  phMin                         Decimal  @db.Decimal(3, 1)
+  phMax                         Decimal  @db.Decimal(3, 1)
+  drainageCondition             String
+  organicMatter                 String
+  generalFoodSuitability        String
+  sagoSuitability               String
+  annualProductionTon           Int
+  productivityTonPerHaYear      Decimal  @db.Decimal(5, 2)
+  productionContributionPercent Decimal  @db.Decimal(5, 2)
+  colorHex                      String
+  sortOrder                     Int      @default(0)
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
 model RegionalCommodityStat {
   id                  String   @id
   regency             String

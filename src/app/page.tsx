@@ -141,13 +141,13 @@ const partners = [
     logoClassName: "h-24 w-24",
   },
   {
-    name: "Bank Indonesia",
-    logo: "/images/partners/bank-indonesia.svg",
+    name: "Perum BULOG",
+    logo: "/images/partners/bulog.svg",
     logoClassName: "h-16 w-full max-w-64",
   },
   {
-    name: "Perum BULOG",
-    logo: "/images/partners/bulog.svg",
+    name: "Tay Juhana Foundation",
+    logo: "/images/partners/tay-juhana-foundation.png",
     logoClassName: "h-16 w-full max-w-64",
   },
 ];
@@ -219,9 +219,9 @@ function Hero() {
             Ekosistem Digital Komoditas Sagu Sulawesi Tenggara
           </p>
           <p className="mt-5 max-w-xl text-base leading-8 text-[#2F3E35] sm:text-lg">
-            Menghubungkan petani, UMKM, pembeli dan mitra melalui satu
-            platform digital untuk hilirisasi sagu, ketahanan pangan dan
-            ekonomi maritim.
+            Menghubungkan petani, UMKM, pembeli dan mitra melalui satu platform
+            digital untuk keberlanjutan pertanian dan ketahanan iklim di wilayah
+            suboptimal.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button href="#tentang" size="lg">
@@ -400,6 +400,24 @@ function EducationSection() {
     },
   ];
 
+  const climateModules = [
+    {
+      title: "Modul 1: Sagu Tanaman Adaptif Lahan Suboptimal",
+      text: "Pengantar karakter sagu sebagai tanaman pangan lokal yang tangguh pada lahan basah, marginal dan suboptimal.",
+      pdf: "/documents/education/modul1-sagu-tanaman-adaptif-lahan-suboptimal.pdf",
+    },
+    {
+      title: "Modul 2: Budi Daya Sagu Berkelanjutan Agroforestri",
+      text: "Panduan praktik budi daya sagu yang menjaga produktivitas kebun sekaligus mendukung sistem agroforestri.",
+      pdf: "/documents/education/modul2-budi-daya-sagu-berkelanjutan-agroforestri.pdf",
+    },
+    {
+      title: "Modul 3: Sagu dan Ketahanan Iklim Komunitas",
+      text: "Materi pembelajaran tentang peran sagu dalam ketahanan pangan, adaptasi iklim dan daya tahan komunitas.",
+      pdf: "/documents/education/modul3-sagu-dan-ketahanan-iklim-komunitas.pdf",
+    },
+  ];
+
   return (
     <section id="edukasi" className="section-shell scroll-target pb-16">
       <div className="grid gap-6 xl:grid-cols-[0.75fr_1.25fr]">
@@ -448,6 +466,68 @@ function EducationSection() {
               </div>
             </article>
           ))}
+
+          <details className="group md:col-span-2 xl:col-span-3">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-5 rounded-3xl bg-[linear-gradient(120deg,#153F29_0%,#23623F_70%,#2F7D57_100%)] p-6 text-white shadow-card transition hover:-translate-y-0.5 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-forest-700/25 [&::-webkit-details-marker]:hidden">
+              <span className="flex min-w-0 items-center gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gold-500 text-forest-900">
+                  <Leaf className="h-6 w-6" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs font-black uppercase tracking-[0.14em] text-gold-300">
+                    Seri Edukasi
+                  </span>
+                  <span className="mt-1 block text-xl font-black sm:text-2xl">Seri Ketahanan Iklim</span>
+                  <span className="mt-1 block text-sm leading-6 text-white/75">
+                    Buka seri untuk melihat tiga modul sagu, agroforestri, dan ketahanan komunitas.
+                  </span>
+                </span>
+              </span>
+
+              <span className="flex shrink-0 items-center gap-3">
+                <span className="hidden rounded-full bg-white/10 px-3 py-1.5 text-xs font-black sm:inline-flex">
+                  3 modul
+                </span>
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-white text-forest-900 transition group-open:rotate-90">
+                  <ChevronRight className="h-5 w-5" />
+                </span>
+              </span>
+            </summary>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              {climateModules.map((module, moduleIndex) => (
+                <article
+                  key={module.title}
+                  className="flex h-full flex-col rounded-3xl border border-forest-700/10 bg-[#F7FBF3] p-6 shadow-card"
+                >
+                  <span className="w-fit rounded-full bg-[#DFF0D8] px-3 py-1 text-xs font-black text-forest-700">
+                    Modul {moduleIndex + 1} dari 3
+                  </span>
+                  <h3 className="mt-5 text-lg font-black text-forest-900">{module.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[#5F6F64]">{module.text}</p>
+                  <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                    <a
+                      href={module.pdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-forest-700 px-4 py-2 text-xs font-black text-white transition hover:bg-forest-900"
+                    >
+                      <BookOpenCheck className="h-4 w-4" />
+                      Baca PDF
+                    </a>
+                    <a
+                      href={module.pdf}
+                      download
+                      className="inline-flex items-center gap-2 rounded-full border border-forest-700/20 px-4 py-2 text-xs font-black text-forest-700 transition hover:bg-[#EAF6E8]"
+                    >
+                      <Download className="h-4 w-4" />
+                      Unduh
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </details>
         </div>
       </div>
       <EducationGallery />

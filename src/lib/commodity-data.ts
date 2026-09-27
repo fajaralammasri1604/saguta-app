@@ -71,7 +71,7 @@ function createProductionValueAxis(maxValue: number) {
 }
 
 export async function getCommodityDashboardData() {
-  const [metrics, priceTrends, productionVolumes, productionAnalyses, regions, featuredCenters, dashboardUpdate] =
+  const [metrics, priceTrends, productionVolumes, productionAnalyses, landConditions, regions, featuredCenters, dashboardUpdate] =
     await Promise.all([
       prisma.commodityMetric.findMany({
         orderBy: { period: "desc" },
@@ -83,6 +83,9 @@ export async function getCommodityDashboardData() {
         orderBy: { sortOrder: "asc" },
       }),
       prisma.sagoProductionAnalysis.findMany({
+        orderBy: { sortOrder: "asc" },
+      }),
+      prisma.sagoLandCondition.findMany({
         orderBy: { sortOrder: "asc" },
       }),
       prisma.regionalCommodityStat.findMany({
@@ -122,6 +125,8 @@ export async function getCommodityDashboardData() {
   // analysis records that are installed by the database migration/seed.
   const effectiveProductionAnalyses =
     productionAnalyses.length > 0 ? productionAnalyses : getFallbackProductionAnalyses();
+  const effectiveLandConditions =
+    landConditions.length > 0 ? landConditions : getFallbackLandConditions();
   const productionAnalysisRows = effectiveProductionAnalyses.map((item) => ({
     regency: item.regency,
     volumeValue: Number(item.production2024Ton),
@@ -147,6 +152,48 @@ export async function getCommodityDashboardData() {
     totalProductionVolume > 0
       ? Math.round(weightedPriceTotal / totalProductionVolume / 100) * 100
       : 0;
+  const totalLandArea = effectiveLandConditions.reduce((total, item) => total + item.areaHa, 0);
+  const totalLandProduction = effectiveLandConditions.reduce(
+    (total, item) => total + item.annualProductionTon,
+    0,
+  );
+  const maxLandArea = Math.max(1, ...effectiveLandConditions.map((item) => item.areaHa));
+  const maxLandProduction = Math.max(
+    1,
+    ...effectiveLandConditions.map((item) => item.annualProductionTon),
+  );
+  const maxLandProductivity = Math.max(
+    1,
+    ...effectiveLandConditions.map((item) => Number(item.productivityTonPerHaYear)),
+  );
+  let pieCursor = 0;
+  const landPieSegments = effectiveLandConditions.map((item) => {
+    const start = pieCursor;
+    const share = totalLandArea > 0 ? (item.areaHa / totalLandArea) * 100 : 0;
+    pieCursor += share;
+    return `${item.colorHex} ${start.toFixed(2)}% ${pieCursor.toFixed(2)}%`;
+  });
+  const landConditionRows = effectiveLandConditions.map((item) => ({
+    id: item.id,
+    landType: item.landType,
+    areaHa: item.areaHa,
+    area: item.areaHa.toLocaleString("id-ID"),
+    areaShare: `${formatNumber(Number(item.areaSharePercent), 1)}%`,
+    phRange: `${formatNumber(Number(item.phMin), 1)}–${formatNumber(Number(item.phMax), 1)}`,
+    drainageCondition: item.drainageCondition,
+    organicMatter: item.organicMatter,
+    generalFoodSuitability: item.generalFoodSuitability,
+    sagoSuitability: item.sagoSuitability,
+    annualProductionTon: item.annualProductionTon,
+    annualProduction: item.annualProductionTon.toLocaleString("id-ID"),
+    productivity: Number(item.productivityTonPerHaYear),
+    productivityLabel: formatNumber(Number(item.productivityTonPerHaYear), 2),
+    productionContribution: `${formatNumber(Number(item.productionContributionPercent), 1)}%`,
+    color: item.colorHex,
+    areaWidth: (item.areaHa / maxLandArea) * 100,
+    productionWidth: (item.annualProductionTon / maxLandProduction) * 100,
+    productivityHeight: (Number(item.productivityTonPerHaYear) / maxLandProductivity) * 100,
+  }));
 
   return {
     updatedLabel: dashboardUpdate?.label ?? "Data komoditas belum diperbarui",
@@ -175,6 +222,16 @@ export async function getCommodityDashboardData() {
         unit: "orang",
         note: farmerDiff >= 0 ? "Bertambah bulan ini" : "Berkurang bulan ini",
         badge: `${farmerDiff >= 0 ? "+" : "-"}${Math.abs(farmerDiff)}`,
+      },
+    },
+    landCondition: {
+      rows: landConditionRows,
+      pieGradient: `conic-gradient(${landPieSegments.join(", ")})`,
+      totals: {
+        area: totalLandArea.toLocaleString("id-ID"),
+        production: totalLandProduction.toLocaleString("id-ID"),
+        productivity:
+          totalLandArea > 0 ? formatNumber(totalLandProduction / totalLandArea, 2) : "0,00",
       },
     },
     priceTrend: priceTrends.map((item) => ({
@@ -342,6 +399,7 @@ function getFallbackCommodityRows() {
     fallbackPriceTrends,
     fallbackProductionVolumes,
     getFallbackProductionAnalyses(),
+    getFallbackLandConditions(),
     [
       { id: "konawe", regency: "Konawe", productionTon: 54, pricePerKg: 8650, trend30DayPercent: 21, centersCount: 4, activePartnersCount: 18, sortOrder: 1 },
       { id: "kolaka", regency: "Kolaka", productionTon: 46, pricePerKg: 8420, trend30DayPercent: 9, centersCount: 3, activePartnersCount: 15, sortOrder: 2 },
@@ -360,6 +418,15 @@ function getFallbackCommodityRows() {
       updatedAt: new Date(),
     },
   ] as const;
+}
+
+function getFallbackLandConditions() {
+  return [
+    { id: "rawa-pasang-surut", landType: "Rawa / Pasang Surut", areaHa: 1250, areaSharePercent: "34.1", phMin: "4.0", phMax: "5.5", drainageCondition: "Tergenang musiman-permanen", organicMatter: "Sedang - Tinggi", generalFoodSuitability: "Rendah", sagoSuitability: "Tinggi", annualProductionTon: 3125, productivityTonPerHaYear: "2.50", productionContributionPercent: "37.0", colorHex: "#2F7D57", sortOrder: 1 },
+    { id: "gambut", landType: "Gambut", areaHa: 950, areaSharePercent: "25.9", phMin: "3.5", phMax: "4.5", drainageCondition: "Jenuh air, drainase buruk", organicMatter: "Sangat Tinggi", generalFoodSuitability: "Rendah", sagoSuitability: "Tinggi", annualProductionTon: 2565, productivityTonPerHaYear: "2.70", productionContributionPercent: "30.3", colorHex: "#D7A62A", sortOrder: 2 },
+    { id: "tanah-masam", landType: "Tanah Masam", areaHa: 880, areaSharePercent: "24.0", phMin: "4.5", phMax: "5.5", drainageCondition: "Drainase sedang", organicMatter: "Rendah - Sedang", generalFoodSuitability: "Sedang", sagoSuitability: "Tinggi", annualProductionTon: 1936, productivityTonPerHaYear: "2.20", productionContributionPercent: "22.9", colorHex: "#D86A3A", sortOrder: 3 },
+    { id: "lahan-kering-marginal", landType: "Lahan Kering Marginal", areaHa: 590, areaSharePercent: "16.1", phMin: "5.0", phMax: "6.0", drainageCondition: "Drainase baik, rawan kering", organicMatter: "Rendah", generalFoodSuitability: "Sedang", sagoSuitability: "Sedang", annualProductionTon: 826, productivityTonPerHaYear: "1.40", productionContributionPercent: "9.8", colorHex: "#7557A5", sortOrder: 4 },
+  ];
 }
 
 function getFallbackProductionAnalyses() {

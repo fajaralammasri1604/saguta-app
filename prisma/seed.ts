@@ -75,6 +75,13 @@ async function main() {
     { id: "lainnya", regency: "Lainnya / Kab. lain", production2024Ton: "126.50", price2024RpKg: 3900, productionValueMillionRp: "0.49", volumeSharePercent: "2.9", valueSharePercent: "2.6", category: "★ Sentra Kecil", categoryLevel: "small", sortOrder: 13 },
   ];
 
+  const landConditions = [
+    { id: "rawa-pasang-surut", landType: "Rawa / Pasang Surut", areaHa: 1250, areaSharePercent: "34.1", phMin: "4.0", phMax: "5.5", drainageCondition: "Tergenang musiman-permanen", organicMatter: "Sedang - Tinggi", generalFoodSuitability: "Rendah", sagoSuitability: "Tinggi", annualProductionTon: 3125, productivityTonPerHaYear: "2.50", productionContributionPercent: "37.0", colorHex: "#2F7D57", sortOrder: 1 },
+    { id: "gambut", landType: "Gambut", areaHa: 950, areaSharePercent: "25.9", phMin: "3.5", phMax: "4.5", drainageCondition: "Jenuh air, drainase buruk", organicMatter: "Sangat Tinggi", generalFoodSuitability: "Rendah", sagoSuitability: "Tinggi", annualProductionTon: 2565, productivityTonPerHaYear: "2.70", productionContributionPercent: "30.3", colorHex: "#D7A62A", sortOrder: 2 },
+    { id: "tanah-masam", landType: "Tanah Masam", areaHa: 880, areaSharePercent: "24.0", phMin: "4.5", phMax: "5.5", drainageCondition: "Drainase sedang", organicMatter: "Rendah - Sedang", generalFoodSuitability: "Sedang", sagoSuitability: "Tinggi", annualProductionTon: 1936, productivityTonPerHaYear: "2.20", productionContributionPercent: "22.9", colorHex: "#D86A3A", sortOrder: 3 },
+    { id: "lahan-kering-marginal", landType: "Lahan Kering Marginal", areaHa: 590, areaSharePercent: "16.1", phMin: "5.0", phMax: "6.0", drainageCondition: "Drainase baik, rawan kering", organicMatter: "Rendah", generalFoodSuitability: "Sedang", sagoSuitability: "Sedang", annualProductionTon: 826, productivityTonPerHaYear: "1.40", productionContributionPercent: "9.8", colorHex: "#7557A5", sortOrder: 4 },
+  ];
+
   const regions = [
     { id: "konawe", regency: "Konawe", productionTon: 54, pricePerKg: 8650, trend30DayPercent: 21, centersCount: 4, activePartnersCount: 18, sortOrder: 1 },
     { id: "kolaka", regency: "Kolaka", productionTon: 46, pricePerKg: 8420, trend30DayPercent: 9, centersCount: 3, activePartnersCount: 15, sortOrder: 2 },
@@ -126,6 +133,14 @@ async function main() {
       where: { id: productionAnalysis.id },
       update: productionAnalysis,
       create: productionAnalysis,
+    });
+  }
+
+  for (const landCondition of landConditions) {
+    await prisma.sagoLandCondition.upsert({
+      where: { id: landCondition.id },
+      update: landCondition,
+      create: landCondition,
     });
   }
 

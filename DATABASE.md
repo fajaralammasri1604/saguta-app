@@ -31,6 +31,7 @@ npm run db:studio
 - `SagoPriceTrend`: data grafik harga sagu per kabupaten/kota dengan kolom `price2022RpKg`, `price2023RpKg`, `price2024RpKg`, dan `averagePriceRp`.
 - `SagoProductionVolume`: sumber acuan grafik volume produksi sagu mentah per kabupaten/kota, dengan kolom `production2022Ton`, `production2023Ton`, dan `production2024Ton`.
 - `SagoProductionAnalysis`: sumber grafik nilai produksi 2024 dan tabel analisis gabungan. Total Sultra dan skala grafik dihitung otomatis dari seluruh baris tabel ini.
+- `SagoLandCondition`: kondisi agroekologi per tipe lahan beserta luas, volume produksi tahunan, produktivitas, dan kontribusi produksi. Tabel ini menjadi sumber tiga grafik kondisi lahan di bagian utama halaman.
 - `RegionalCommodityStat`: data produksi, harga, tren, sentra, dan mitra per kabupaten.
 - `FeaturedCenter`: daftar sentra unggulan.
 - `DashboardUpdate`: teks status pembaruan data di bagian atas halaman.

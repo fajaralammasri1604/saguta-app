@@ -92,7 +92,7 @@ export default async function DataKomoditasPage() {
                 Data Komoditas Sagu
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#5F6F64]">
-                Informasi komprehensif mengenai tren harga sagu, volume produksi sagu mentah, analisis nilai produksi sagu per kabupaten di Sulawesi Tenggara, serta rincian data setiap kabupaten yang diurutkan berdasarkan volume produksi tertinggi.
+                Melihat bagaimana kondisi dan tipe lahan memengaruhi produktivitas serta volume produksi sagu, dilengkapi analisis produksi dan harga per kabupaten di Sulawesi Tenggara.
               </p>
             </div>
             <Button href="#laporan" variant="primary" className="w-fit">
@@ -131,8 +131,143 @@ export default async function DataKomoditasPage() {
           ))}
         </div>
 
-        <div className="mt-9 grid gap-5">
-          <section className="rounded-3xl border border-forest-700/10 bg-warm-50 p-7 shadow-card">
+        <section id="kondisi-lahan" className="mt-9 overflow-hidden rounded-[2rem] border border-forest-700/10 bg-warm-50 shadow-card">
+          <div className="bg-[linear-gradient(125deg,#153F29_0%,#23623F_62%,#2F7D57_100%)] px-5 py-7 text-white sm:px-8">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <span className="inline-flex rounded-full bg-gold-500 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-forest-900">
+                  Fokus Utama
+                </span>
+                <h2 className="mt-4 text-2xl font-black sm:text-3xl">Kondisi Lahan &amp; Dampaknya pada Produksi Sagu</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">
+                  Perbandingan tipe lahan menunjukkan hubungan antara luas areal, karakter agroekologi, volume produksi, dan produktivitas tahunan.
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <LandMetric value={dashboard.landCondition.totals.area} unit="ha" label="Total lahan" />
+                <LandMetric value={dashboard.landCondition.totals.production} unit="ton" label="Produksi/tahun" />
+                <LandMetric value={dashboard.landCondition.totals.productivity} unit="ton/ha" label="Produktivitas" />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-5 p-5 sm:p-7 xl:grid-cols-12">
+            <article className="rounded-3xl border border-forest-700/10 bg-[#FFFDF7] p-5 xl:col-span-4">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#D84E1F]">Komposisi Areal</p>
+                <h3 className="mt-2 text-xl font-black text-forest-900">Luas per Tipe Lahan</h3>
+              </div>
+
+              <div className="mt-7 flex flex-col items-center gap-7 sm:flex-row xl:flex-col 2xl:flex-row">
+                <div
+                  className="relative aspect-square w-52 shrink-0 rounded-full shadow-inner"
+                  style={{ background: dashboard.landCondition.pieGradient }}
+                  role="img"
+                  aria-label="Diagram komposisi luas tipe lahan sagu"
+                >
+                  <div className="absolute inset-[24%] grid place-items-center rounded-full bg-[#FFFDF7] text-center shadow-sm">
+                    <span>
+                      <strong className="block text-2xl font-black text-forest-900">{dashboard.landCondition.totals.area}</strong>
+                      <span className="text-xs font-bold text-[#5F6F64]">hektare</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="w-full space-y-3">
+                  {dashboard.landCondition.rows.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between gap-3"
+                      title={`pH ${item.phRange}; ${item.drainageCondition}; bahan organik ${item.organicMatter}; kesesuaian sagu ${item.sagoSuitability}`}
+                    >
+                      <span className="flex min-w-0 items-center gap-2 text-xs font-bold text-forest-900">
+                        <span className="h-3 w-3 shrink-0 rounded-sm" style={{ backgroundColor: item.color }} />
+                        <span>{item.landType}</span>
+                      </span>
+                      <span className="shrink-0 text-xs font-black text-[#5F6F64]">{item.areaShare}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+
+            <article className="rounded-3xl border border-forest-700/10 bg-[#FFFDF7] p-5 xl:col-span-8">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-[#D84E1F]">Hubungan Lahan–Produksi</p>
+                  <h3 className="mt-2 text-xl font-black text-forest-900">Luas Lahan vs Volume Produksi</h3>
+                </div>
+                <div className="flex gap-4 text-xs font-bold text-[#5F6F64]">
+                  <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-gold-500" />Luas (ha)</span>
+                  <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-forest-600" />Produksi (ton/tahun)</span>
+                </div>
+              </div>
+
+              <div className="mt-7 space-y-5" role="img" aria-label="Grafik perbandingan luas lahan dan volume produksi sagu per tipe lahan">
+                {dashboard.landCondition.rows.map((item) => (
+                  <div
+                    key={item.id}
+                    title={`pH ${item.phRange}; ${item.drainageCondition}; bahan organik ${item.organicMatter}; kesesuaian pangan umum ${item.generalFoodSuitability}; kesesuaian sagu ${item.sagoSuitability}`}
+                  >
+                    <div className="mb-2 flex items-end justify-between gap-3">
+                      <span className="text-sm font-black text-forest-900">{item.landType}</span>
+                      <span className="rounded-full bg-[#EAF6E8] px-2.5 py-1 text-[11px] font-black text-forest-700">
+                        {item.productionContribution} produksi
+                      </span>
+                    </div>
+                    <div className="grid gap-1.5">
+                      <div className="flex h-5 items-center">
+                        <div className="flex h-full min-w-[4.5rem] items-center justify-end rounded-r-md bg-gold-500 px-2 text-[10px] font-black text-forest-900" style={{ width: `${item.areaWidth}%` }}>
+                          {item.area} ha
+                        </div>
+                      </div>
+                      <div className="flex h-6 items-center">
+                        <div className="flex h-full min-w-[5.5rem] items-center justify-end rounded-r-md bg-forest-600 px-2 text-[10px] font-black text-white" style={{ width: `${item.productionWidth}%` }}>
+                          {item.annualProduction} ton
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="rounded-3xl border border-forest-700/10 bg-[#FFFDF7] p-5 xl:col-span-12">
+              <div className="text-center">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#D84E1F]">Efisiensi Produksi</p>
+                <h3 className="mt-2 text-xl font-black text-forest-900">Produktivitas per Tipe Lahan</h3>
+                <p className="mt-1 text-xs text-[#5F6F64]">ton/ha/tahun</p>
+              </div>
+
+              <div className="mt-7 overflow-x-auto pb-2">
+                <div className="mx-auto grid min-w-[680px] grid-cols-4 gap-5 border-b border-forest-700/20 px-4" role="img" aria-label="Grafik produktivitas sagu per tipe lahan dalam ton per hektare per tahun">
+                  {dashboard.landCondition.rows.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex h-64 flex-col items-center justify-end"
+                      title={`${item.landType}: ${item.productivityLabel} ton/ha/tahun; pH ${item.phRange}; ${item.drainageCondition}; bahan organik ${item.organicMatter}; kesesuaian sagu ${item.sagoSuitability}`}
+                    >
+                      <span className="mb-2 text-sm font-black text-forest-900">{item.productivityLabel}</span>
+                      <div
+                        className="w-full max-w-24 rounded-t-xl shadow-sm"
+                        style={{ height: `${item.productivityHeight}%`, backgroundColor: item.color }}
+                      />
+                      <span className="flex h-14 items-start pt-3 text-center text-xs font-black leading-4 text-forest-900">{item.landType}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <p className="border-t border-forest-700/10 px-5 py-4 text-center text-xs italic leading-5 text-[#6F766F] sm:px-7">
+            Data kondisi lahan dan produksi bersifat ilustratif untuk kebutuhan dashboard; verifikasi dengan survei lapangan atau sumber resmi sebelum dipublikasikan.
+          </p>
+        </section>
+
+        <div className="mt-5 flex flex-col">
+        <div className="contents">
+          <section className="order-2 mt-5 rounded-3xl border border-forest-700/10 bg-warm-50 p-7 shadow-card">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-2xl font-black text-forest-900">Harga Sagu per Kabupaten Sulawesi Tenggara (2022-2024)</h2>
@@ -206,7 +341,7 @@ export default async function DataKomoditasPage() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-forest-700/10 bg-warm-50 p-7 shadow-card">
+          <section className="order-1 rounded-3xl border border-forest-700/10 bg-warm-50 p-7 shadow-card">
             <h2 className="text-center text-2xl font-black text-forest-900">
               Volume Produksi Sagu Mentah per Kabupaten (2022–2024)
             </h2>
@@ -294,7 +429,7 @@ export default async function DataKomoditasPage() {
           </section>
         </div>
 
-        <section className="mt-5 rounded-3xl border border-forest-700/10 bg-warm-50 p-5 shadow-card sm:p-7">
+        <section className="order-3 mt-5 rounded-3xl border border-forest-700/10 bg-warm-50 p-5 shadow-card sm:p-7">
           <div className="text-center">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#703B8C]">Analisis Produksi 2024</p>
             <h2 className="mt-2 text-2xl font-black text-forest-900 sm:text-3xl">
@@ -377,7 +512,7 @@ export default async function DataKomoditasPage() {
           </div>
         </section>
 
-        <section className="mt-5 overflow-hidden rounded-3xl border border-forest-700/10 bg-warm-50 shadow-card">
+        <section className="order-4 mt-5 overflow-hidden rounded-3xl border border-forest-700/10 bg-warm-50 shadow-card">
           <div className="bg-[#703B8C] px-5 py-5 text-center text-white sm:px-7">
             <h2 className="text-lg font-black sm:text-2xl">
               Analisis Gabungan: Volume Produksi &amp; Harga Sagu per Kabupaten 2024
@@ -429,6 +564,7 @@ export default async function DataKomoditasPage() {
             </table>
           </div>
         </section>
+        </div>
 
         <section className="mt-6">
           <h2 className="text-2xl font-black text-forest-900">Sentra Unggulan</h2>
@@ -499,6 +635,16 @@ function Metric({
     <div>
       <p className={`text-lg font-black ${tone}`}>{value}</p>
       <p className="mt-1 text-xs font-semibold leading-5 text-[#5F6F64]">{label}</p>
+    </div>
+  );
+}
+
+function LandMetric({ value, unit, label }: { value: string; unit: string; label: string }) {
+  return (
+    <div className="min-w-0 rounded-2xl bg-white/10 px-3 py-3 backdrop-blur-sm">
+      <p className="text-base font-black sm:text-xl">{value}</p>
+      <p className="text-[10px] font-bold text-white/70">{unit}</p>
+      <p className="mt-1 text-[10px] font-black uppercase tracking-wide text-white/90">{label}</p>
     </div>
   );
 }
